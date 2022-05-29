@@ -4,11 +4,13 @@
 
 
 #form-controll label{
+    display: block;
     font-weight: bold;
+    margin-bottom: 0.5rem;
 }
 
 
-#form-controll input{
+#form-controll input, textarea{
     font-size: 1.25rem;
     display: block;
     margin: 0 auto;
@@ -16,5 +18,7 @@
     border: 1px solid rgb(204, 204, 204);
     border-radius: 4px;
     padding: 0.3rem;
+    box-sizing: border-box;
+    color: rgb(78, 73, 73);
 }
 

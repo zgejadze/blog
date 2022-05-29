@@ -1,0 +1,26 @@
+main {
+    width: 90%;
+    max-width: 40rem;
+    margin: 1.5rem auto;
+}
+h1{
+    font-size: 2rem;
+}
+
+#post-list{
+    list-style-type: none;
+    padding: 0;
+    
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    margin: 0 0.5rem;
+}
+
+#post-list li {
+    padding: 0.5rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 25%);
+}

@@ -14,5 +14,13 @@ router.get('/login', function (req, res){
     res.render('login');
 });
 
+router.get('/admin', function (req, res){
+    res.render('admin');
+});
+
+router.get('/dummy-link', function(req, res){
+    res.render('single-post')
+})
+
 
 module.exports = router
