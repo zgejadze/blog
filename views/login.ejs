@@ -1,0 +1,24 @@
+<%- include('includes/head') %> 
+<link rel="stylesheet" href="styles/auth.css">
+<link rel="stylesheet" href="styles/forms.css">
+</head>
+<body>
+    <%- include('includes/header') %> 
+    <main>
+        <form action="/login" id="signup-form">
+            <h1>Login</h1>
+            <div id="form-controll">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" required>
+            </div>
+            <div id="form-controll">
+                <label for="email">Password</label>
+                <input type="password" name="password" id="password" required>
+            </div>
+            <button class="btn">Login</button>
+        </form>
+        <div id="auth-alt">
+            <a href="/login" class="btn-alt">Create a new user</a>
+        </div>
+    </main>
+</body>
