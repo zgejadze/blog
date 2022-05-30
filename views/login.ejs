@@ -5,7 +5,7 @@
 <body>
     <%- include('includes/header') %> 
     <main>
-        <form action="/admin" id="login-form">
+        <form action="/login" method="POST" id="login-form">
             <h1>Login</h1>
             <div id="form-controll">
                 <label for="email">Email</label>
@@ -18,7 +18,7 @@
             <button class="btn">Login</button>
         </form>
         <div id="auth-alt">
-            <a href="/login" class="btn-alt">Create a new user</a>
+            <a href="/signup" class="btn-alt">Create a new user</a>
         </div>
     </main>
 </body>

@@ -1,7 +1,8 @@
 const express = require("express");
 const bcrypt = require('bcryptjs');
 
-const db = require('../data/database')
+const db = require('../data/database');
+const { getDb } = require("../data/database");
 
 const router = express.Router();
 
@@ -34,6 +35,26 @@ router.post('/signup', async function(req, res){
 
 router.get('/login', function (req, res){
     res.render('login');
+});
+
+router.post('/login',async function(req, res){
+    const userData = req.body;
+    const enteredPassword = userData.password
+    const enteredEmail = userData.email;
+
+    const existingUser = await getDb().collection('users').findOne({email: enteredEmail});
+
+    if(!existingUser){
+        return res.redirect('/login')
+    }
+
+    const passwordAreEqual = await bcrypt.compare(enteredPassword, existingUser.password);
+
+    if(!passwordAreEqual){
+        return res.redirect('/login')
+    }
+
+    res.redirect('/admin')
 });
 
 router.get('/admin', function (req, res){
