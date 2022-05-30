@@ -1,9 +1,9 @@
 <li>
     <article>
-        <h3>Post Title</h3>
+        <h3><%= post.title %> </h3>
         <div class="actions">
-            <a href="/dummy-link" class="btn">View & Edit</a>
-            <form action>
+            <a href="/post/<%- post._id %>/edit" class="btn">View & Edit</a>
+            <form action="/delete/<%- post._id %>" method="POST">
                 <button class="btn-alt">Delete</button>
             </form>
         </div>

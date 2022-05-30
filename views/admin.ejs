@@ -9,7 +9,7 @@
         <section>
             <h1>Administrate Blog Posts</h1>
             <h2>Create a New Post</h2>
-            <form action>
+            <form method="POST" action="/admin">
                 <div id="form-controll">
                     <label for="post-title">Title</label>
                     <input type="text" name="post-title" id="post-title">
@@ -24,7 +24,9 @@
         <section>
             <h2>All Blog Posts</h2>
             <ul id="post-list">
-                <%- include('includes/post-list-item') %> 
+                <% for(const post of posts){ %> 
+                <%- include('includes/post-list-item', {post: post}) %>
+                <% } %> 
             </ul>
         </section>
     </main>
