@@ -1,11 +1,15 @@
 <header>
     <ul id="navbar">
         <li><a class="navbar-links" href="/">Home</a></li>
+        <% if(!locals.isAuth){ %> 
         <li><a class="navbar-links" href="/signup">Signup</a></li>
         <li><a class="navbar-links" href="/login">Login</a></li>
+        <% } %>
+        <% if(locals.isAuth) { %>  
         <li><a class="navbar-links" href="/admin">Admin</a></li>
-        <form>
+        <form action="/logout" method="POST">
             <li><button>Logout</button></li>
         </form>
+        <% } %> 
     </ul>
 </header>
