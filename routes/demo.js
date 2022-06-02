@@ -186,7 +186,8 @@ router.post("/admin", async function (req, res) {
     content: enteredpostContent,
   };
 
-  if (    !enteredPostTitle ||
+  if (
+    !enteredPostTitle ||
     !enteredpostContent ||
     enteredPostTitle.trim() === "" ||
     enteredpostContent.trim() === ""
@@ -197,8 +198,9 @@ router.post("/admin", async function (req, res) {
       title: enteredPostTitle,
       content: enteredpostContent,
     };
-
-    res.redirect("/admin");
+    req.session.save(function(){
+      res.redirect("/admin");
+    })
     return;
   }
 
