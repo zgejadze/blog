@@ -160,9 +160,22 @@ router.get("/admin", async function (req, res) {
   if (!res.locals.isAuth) {
     return res.status(401).render("401");
   }
+
+  let sessionInputData = req.session.inputData;
+
+  if (!sessionInputData) {
+    sessionInputData = {
+      hasError: false,
+      title: "",
+      content: "",
+    };
+  }
+
+  req.session.inputData = null;
+
   const posts = await db.getDb().collection("posts").find().toArray();
 
-  res.render("admin", { posts: posts });
+  res.render("admin", { posts: posts, inputData: sessionInputData });
 });
 
 router.post("/admin", async function (req, res) {
@@ -172,6 +185,23 @@ router.post("/admin", async function (req, res) {
     title: enteredPostTitle,
     content: enteredpostContent,
   };
+
+  if (    !enteredPostTitle ||
+    !enteredpostContent ||
+    enteredPostTitle.trim() === "" ||
+    enteredpostContent.trim() === ""
+  ) {
+    req.session.inputData = {
+      hasError: true,
+      message: "Invalid input - please check your data.",
+      title: enteredPostTitle,
+      content: enteredpostContent,
+    };
+
+    res.redirect("/admin");
+    return;
+  }
+
   await db.getDb().collection("posts").insertOne(enteredPostObject);
   res.redirect("/admin");
 });
