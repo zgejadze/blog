@@ -4,6 +4,8 @@
         <div class="actions">
             <a href="/post/<%- post._id %>/edit" class="btn">View & Edit</a>
             <form action="/delete/<%- post._id %>" method="POST">
+                <input type="hidden" value="<%= csrfToken %>" name="_csrf">
+
                 <button class="btn-alt">Delete</button>
             </form>
         </div>

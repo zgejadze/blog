@@ -7,6 +7,8 @@
     <%- include('includes/header') %> 
     <main>
     <form action="/signup" method="POST" id="signup-form">
+        <input type="hidden" value="<%= csrfToken %>" name="_csrf">
+
         <h1>Signup</h1>
         <% if(inputData.hasError){ %>
             <p id="input-error"><%= inputData.message %></p>

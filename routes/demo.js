@@ -8,7 +8,7 @@ const ObjectId = mongoDb.ObjectId;
 const router = express.Router();
 
 router.get("/", function (req, res) {
-  res.render("home");
+  res.render("home", { csrfToken: req.csrfToken() });
 });
 
 router.get("/signup", function (req, res) {
@@ -26,6 +26,7 @@ router.get("/signup", function (req, res) {
 
   res.render("signup", {
     inputData: sessionInputData,
+    csrfToken: req.csrfToken(),
   });
 });
 
@@ -81,7 +82,7 @@ router.post("/signup", async function (req, res) {
   };
 
   await db.getDb().collection("users").insertOne(user);
-  res.redirect("/admin");
+  res.redirect("/login");
 });
 
 router.get("/login", function (req, res) {
@@ -99,6 +100,7 @@ router.get("/login", function (req, res) {
 
   res.render("login", {
     inputData: sessionInputData,
+    csrfToken: req.csrfToken(),
   });
 });
 
@@ -175,7 +177,11 @@ router.get("/admin", async function (req, res) {
 
   const posts = await db.getDb().collection("posts").find().toArray();
 
-  res.render("admin", { posts: posts, inputData: sessionInputData });
+  res.render("admin", {
+    posts: posts,
+    inputData: sessionInputData,
+    csrfToken: req.csrfToken(),
+  });
 });
 
 router.post("/admin", async function (req, res) {
@@ -198,9 +204,9 @@ router.post("/admin", async function (req, res) {
       title: enteredPostTitle,
       content: enteredpostContent,
     };
-    req.session.save(function(){
+    req.session.save(function () {
       res.redirect("/admin");
-    })
+    });
     return;
   }
 
@@ -215,7 +221,7 @@ router.get("/post/:id/edit", async function (req, res) {
     .getDb()
     .collection("posts")
     .findOne({ _id: postId });
-  res.render("single-post", { post: postData });
+  res.render("single-post", { post: postData , csrfToken: req.csrfToken()});
 });
 
 router.post("/post/:id/edit", async function (req, res) {

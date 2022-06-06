@@ -9,6 +9,9 @@ const mongoDbStore = require("connect-mongodb-session");
 
 const MongoDbStore = mongoDbStore(session);
 
+const csrf = require('csurf');
+
+
 const app = express();
 
 const sessionStore = new MongoDbStore({
@@ -35,6 +38,8 @@ app.use(
     cookie: { maxAge: 2 * 24 * 60 * 60 * 1000 },
   })
 );
+
+app.use(csrf());
 
 app.use(function(req, res, next){
     const user = req.session.user
