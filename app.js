@@ -4,6 +4,8 @@ const db = require("./data/database");
 const session = require("express-session");
 
 const blogRoutes = require("./routes/demo");
+const authRoutes = require("./routes/auth")
+
 const database = require("./data/database");
 const mongoDbStore = require("connect-mongodb-session");
 
@@ -54,6 +56,7 @@ app.use(function(req, res, next){
 })
 
 app.use(blogRoutes);
+app.use(authRoutes);
 
 app.use(function(error, req , res, next){
     res.render('500');
