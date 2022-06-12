@@ -2,6 +2,8 @@ const express = require("express");
 const mongoDb = require("mongodb");
 
 const db = require("../data/database");
+
+const Post = require("../models/post");
 const ObjectId = mongoDb.ObjectId;
 
 const router = express.Router();
@@ -39,10 +41,6 @@ router.get("/admin", async function (req, res) {
 router.post("/admin", async function (req, res) {
   const enteredPostTitle = req.body["post-title"];
   const enteredpostContent = req.body["post-content"];
-  const enteredPostObject = {
-    title: enteredPostTitle,
-    content: enteredpostContent,
-  };
 
   if (
     !enteredPostTitle ||
@@ -61,8 +59,10 @@ router.post("/admin", async function (req, res) {
     });
     return;
   }
+  const newPost = new Post(enteredPostTitle, enteredpostContent);
 
-  await db.getDb().collection("posts").insertOne(enteredPostObject);
+  await newPost.save();
+
   res.redirect("/admin");
 });
 
@@ -73,7 +73,7 @@ router.get("/post/:id/edit", async function (req, res) {
     .getDb()
     .collection("posts")
     .findOne({ _id: postId });
-  res.render("single-post", { post: postData , csrfToken: req.csrfToken()});
+  res.render("single-post", { post: postData, csrfToken: req.csrfToken() });
 });
 
 router.post("/post/:id/edit", async function (req, res) {
@@ -81,21 +81,15 @@ router.post("/post/:id/edit", async function (req, res) {
   const newTitle = req.body.title;
   const newContent = req.body["post-content"];
 
-  await db
-    .getDb()
-    .collection("posts")
-    .updateOne(
-      { _id: postId },
-      { $set: { title: newTitle, content: newContent } }
-    );
-
+  const updatedPost = new Post(newTitle, newContent, postId); // new post update must go here
+  await updatedPost.save();
   res.redirect("/admin");
 });
 
 router.post("/delete/:id", async function (req, res) {
   const postId = new ObjectId(req.params.id);
-  await db.getDb().collection("posts").deleteOne({ _id: postId });
-
+  const post = new Post(null, null, postId);
+  await post.delete();
   res.redirect("/admin");
 });
 
