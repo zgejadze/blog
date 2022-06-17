@@ -35,7 +35,7 @@ app.use(blogRoutes);
 app.use(authRoutes);
 
 app.use(function (error, req, res, next) {
-  res.render("500");
+  res.render("500", {csrfToken: req.csrfToken()} );
 });
 
 db.connectToDatabase().then(function () {

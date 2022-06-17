@@ -1,15 +1,35 @@
 const db = require("../data/database");
+const mongoDb = require("mongodb");
+
+
+const ObjectId = mongoDb.ObjectId;
+
 
 class Post {
   constructor(title, content, id) {
     this.title = title;
     this.content = content;
-    this.id = id;
+    if(id){
+      this.id = new ObjectId(id)
+    }
+    
   }
 
   static async fetchAll(){
     const posts = await db.getDb().collection("posts").find().toArray();
     return posts
+  }
+
+
+  async fetch() {
+    if(!this.id){
+      return;
+    }
+
+    const post = await db.getDb().collection("posts").findOne({ _id: this.id })
+    this.title = post.title;
+    this.content = post.content;
+    return post
   }
 
   async save() {
