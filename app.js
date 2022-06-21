@@ -10,7 +10,10 @@ const authMiddleware = require('./middlewares/auth-middlewares')
 const database = require("./data/database");
 
 const sessionConfig = require("./config/session"); // imports session configurations
+
 const csrf = require("csurf");
+const addCsrfTokenMiddleware = require('./middlewares/csrf-token-middleware')
+
 const { createSessionConfig } = require("./config/session");
 
 const mongoDbSessionStore = sessionConfig.createSessionStore(session); 
@@ -28,6 +31,7 @@ const port = 3000;
 app.use(session(sessionConfig.createSessionConfig(mongoDbSessionStore)));
 
 app.use(csrf());
+app.use(addCsrfTokenMiddleware)
 
 app.use(authMiddleware);
 

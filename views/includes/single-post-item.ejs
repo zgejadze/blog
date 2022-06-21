@@ -1,5 +1,5 @@
 <form action="/post/<%= post._id %>/edit" method="POST">
-  <input type="hidden" value="<%= csrfToken %>" name="_csrf">
+  <input type="hidden" value="<%= locals.csrfToken %>" name="_csrf">
 
   <div id="form-controll">
     <% if(inputData.hasError) { %> 

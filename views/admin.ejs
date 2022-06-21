@@ -13,7 +13,7 @@
             <p id="input-error"><%= inputData.message %></p>
             <% } %> 
             <form method="POST" action="/admin">
-                <input type="hidden" value="<%= csrfToken %>" name="_csrf">
+                <input type="hidden" value="<%= locals.csrfToken %>" name="_csrf">
 
                 <div id="form-controll">
                     <label for="post-title">Title</label>
