@@ -156,4 +156,8 @@ router.post("/logout", function (req, res) {
   res.redirect("/");
 });
 
+router.get('/401', function(req, res){
+  res.status(401).render('401')
+})
+
 module.exports = router;

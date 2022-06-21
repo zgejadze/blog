@@ -9,9 +9,6 @@ function getHome(req, res) {
 }
 
 async function getAdmin(req, res) {
-  if (!res.locals.isAuth) {
-    return res.status(401).render("401");
-  }
 
   sessionErrorData = sessionValidation.getSessionErrorData(req);
 
@@ -23,14 +20,15 @@ async function getAdmin(req, res) {
   });
 }
 
-async function getSinglePost(req, res) {
-  const post = new Post(null, null, req.params.id);
-  const postData = await post.fetch();
-
-  if (!post.title || !post.content) {
-    return res.status(404).render("404");
+async function getSinglePost(req, res, next) {
+  let post;
+  try {
+    post = new Post(null, null, req.params.id)
+  } catch(error){
+    next(error);
+    return;
   }
-
+  const postData = await post.fetch();
   sessionErrorData = sessionValidation.getSessionErrorData(req);
 
   res.render("single-post", {
